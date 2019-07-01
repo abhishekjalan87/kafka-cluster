@@ -19,6 +19,7 @@ RUN apt-get install -y wget vim dnsutils && \
     tar xfz /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz -C /opt && \
     rm /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 
+RUN sed -i -e '/^log\.dirs=\/tmp\/kafka-logs/s/^.*$/log\.dirs=\/var\/log\/kafkabroker0/g' /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/server.properties
 # default parameters for config file:
 ENV dataLogDir=/var/log/kafkabroker0/
 
