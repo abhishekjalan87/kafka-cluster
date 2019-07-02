@@ -3,7 +3,7 @@ MAINTAINER Abhishek Jalan <abhishek.jalan84@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV SCALA_VERSION 2.12
-ENV KAFKA_VERSION 2.2.0
+ENV KAFKA_VERSION 2.3.0
 ENV KAFKA_HOME /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"
 
 # Install Kafka and other needed things
@@ -11,7 +11,7 @@ RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-bac
 RUN sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
 RUN apt-get -o Acquire::Check-Valid-Until=false update -y
 RUN apt-get install -y apt-utils
-RUN mkdir /var/log/kafkabroker0
+RUN mkdir /var/log/kafkabroker
 RUN apt-get install -y wget vim dnsutils && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean && \
@@ -19,9 +19,7 @@ RUN apt-get install -y wget vim dnsutils && \
     tar xfz /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz -C /opt && \
     rm /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 
-RUN sed -i -e '/^log\.dirs=\/tmp\/kafka-logs/s/^.*$/log\.dirs=\/var\/log\/kafkabroker0/g' /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/server.properties
-# default parameters for config file:
-ENV dataLogDir=/var/log/kafkabroker0/
+RUN sed -i -e '/^log\.dirs=\/tmp\/kafka-logs/s/^.*$/log\.dirs=\/var\/log\/kafkabroker/g' /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/server.properties
 
 ADD scripts/start-kafka.sh /usr/bin/start-kafka.sh
 RUN chmod +x /usr/bin/start-kafka.sh
