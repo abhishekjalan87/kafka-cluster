@@ -19,10 +19,6 @@ RUN yum install -y wget vim dnsutils net-tools && \
 RUN sed -i -e '/^log\.dirs=\/tmp\/kafka-logs/s/^.*$/log\.dirs=\/var\/log\/kafkabroker/g' /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/server.properties
 
 RUN sed -i '22 i port=9093' /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/server.properties
-#RUN sed -i '23 i listeners=EXTERNAL://0.0.0.0:9093' /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/server.properties
-#RUN sed -i '25 i listener.security.protocol.map=EXTERNAL:PLAINTEXT' /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/server.properties
-#RUN sed -i '15 i advertised.listeners=EXTERNAL://kafkabroker2:9093' /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/server.properties
-#RUN sed -i '56 i inter.broker.listener.name=EXTERNAL' /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/server.properties
 
 
 ADD scripts/start-kafka.sh /usr/bin/start-kafka.sh
