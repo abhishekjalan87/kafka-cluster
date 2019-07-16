@@ -9,11 +9,6 @@ if [ ! -z "$KAFKA_PORT" ]; then
     sed -r -i "s/#(advertised.port)=(.*)/\1=$KAFKA_PORT/g" $KAFKA_HOME/config/server.properties
 fi
 
-# Memory options
-if [ -z "$KAFKA_HEAP_OPTS" ]; then
-  KAFKA_HEAP_OPTS="-Xmx256M"
-fi
-
 # Set the broker id
 if [ ! -z "$KAFKA_ID" ]; then
     echo "broker id: $KAFKA_ID"
